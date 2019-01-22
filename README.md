@@ -1,5 +1,5 @@
 ## Foodweb Motif Analysis
-###Code for Giling et al. "Plant diversity alters the representation of motifs in food webs"
+Code for Giling et al. "Plant diversity alters the representation of motifs in food webs"
 
 ### 01_Giling_et_al_build_and_analyse_networks.R
 This script first constructs the matrices of interaction probability among species (plants, consumers and static resources) that co-occurred on an experimental 
