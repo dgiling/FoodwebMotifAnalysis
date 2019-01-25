@@ -1,4 +1,4 @@
-## Foodweb Motif Analysis
+## Food web Motif Analysis
 Code for Giling et al. "Plant diversity alters the representation of motifs in food webs"
 
 ### 01_Giling_et_al_build_and_analyse_networks.R
