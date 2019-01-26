@@ -171,14 +171,12 @@ plot.prop <- function(ytext, yaxt=TRUE, xaxt=TRUE) {
   return(results)
 }
 
-# print figure and results
+# run analysis and print figure
 par(mfrow=c(1,4), oma=c(3,3,1,0), mar=c(1,1,2,1))
 results <- plot.prop("Detritivores", TRUE, TRUE)
 results <- plot.prop("Herbivores", FALSE, TRUE)
 results <- plot.prop("Omnivores", FALSE, TRUE)
 results <- plot.prop("Predators", FALSE, TRUE)
-
-write.csv(results, "cons_prop_results.csv")
 
 
 
@@ -190,7 +188,7 @@ write.csv(results, "cons_prop_results.csv")
 comp <- filter(comp, alpha==10000 & beta==10000)
 
 # setup
-col.list <- c(rgb(62,150,81,max=255), rgb(57,106,177,max=255), rgb(218,124,48,max=255),  rgb(204,37,41,max=255), "grey50")
+col.list <- c(rgb(0,158,115,max=255), rgb(0,114,178,max=255), rgb(230,159,0,max=255),  rgb(204,121,167,max=255), "grey50")
 
 # dataframe for predicting
 divseq <- seq(min(full$log2.psr), max(full$log2.psr), length.out = 100)
@@ -205,12 +203,12 @@ plot.zscores <- function(y, yaxt=TRUE, xaxt=TRUE, col=1) {
   plot(y ~ log2.psr, type='n', data=comp, ylim=c(-0.8,0.8), xlim=(c(0,6)),
        xaxt='n', yaxt='n', las=2, ylab = NA, xlab = NA)
   abline(h=0, lty=2)
-  if(xaxt==TRUE)axis(1, at=log2(c(1,2,4,8,16,60)), lab=c(1,2,4,8,16,60))
+  if(xaxt==TRUE)axis(1, at=log2(c(1,2,4,8,16,60)), lab=c(1,2,4,8,16,60), cex.axis=0.8)
   if(xaxt==FALSE)axis(1, at=log2(c(1,2,4,8,16,60)), lab=NA)
-  if(yaxt==TRUE) axis(2, at=seq(-0.8,0.8,0.4), las=1)
+  if(yaxt==TRUE) axis(2, at=seq(-0.8,0.8,0.4), las=1, cex.axis=0.8)
   if(yaxt==FALSE) axis(2, at=seq(-0.8,0.8,0.4), lab=NA, las=1)
   
-  points(y ~ log2.psr, data=comp, pch=16, col=add.alpha(col.list[col],0.1))
+  points(y ~ log2.psr, data=comp, pch=16, col=add.alpha(col.list[col],0.15))
   lmm <- NULL
   lmm <-lmer(y ~ log2.psr + (1|block/plot) + (1|time.period), data=comp)
   #plot(lmm)
@@ -222,14 +220,13 @@ plot.zscores <- function(y, yaxt=TRUE, xaxt=TRUE, col=1) {
   return(results)
 }
 
-# print figure and results
+# run analysis and print figure
 par(mfrow=c(2,2), oma=c(2,2,1,0), mar=c(1,1,2,1))
 results <- plot.zscores("s1.z.mean", TRUE, FALSE, 1)
 results <- plot.zscores("s2.z.mean", FALSE, FALSE, 2)
 results <- plot.zscores("s4.z.mean", TRUE, TRUE, 3)
 results <- plot.zscores("s5.z.mean", FALSE, TRUE, 4)
 
-write.csv(results, "complexity_results.csv")
 
   
 
