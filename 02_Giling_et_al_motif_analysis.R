@@ -24,7 +24,7 @@ add.alpha <- function(col, alpha=1)
           rgb(x[1], x[2], x[3], alpha=alpha))  
 }
 
-col.list <- c(rgb(62,150,81,max=255), rgb(57,106,177,max=255), rgb(218,124,48,max=255),  rgb(204,37,41,max=255), "grey50")
+col.list <- c(rgb(0,158,115,max=255), rgb(0,114,178,max=255), rgb(230,159,0,max=255),  rgb(204,121,167,max=255), "grey50")
 
 
 
@@ -86,7 +86,7 @@ plot.freq <- function(y, yaxt=TRUE, xaxt=TRUE, col=1, ylow=log10(50), yhigh=log1
     if(yaxt==FALSE) axis(2, at=log10(c(1,10,100,1000,10000)+1), lab=NA, las=1)
     
     # add points for full web
-    points(y ~ log2.psr, data=full, pch=16, col=add.alpha(col.list[col],0.1))
+    points(y ~ log2.psr, data=full, pch=16, col=add.alpha(col.list[col],0.15))
     lmm <- NULL
     lmm <-lmer(y ~ log2.psr + (1|block/plot) + (1|time.period), data=full)
     #plot(lmm)
@@ -96,7 +96,7 @@ plot.freq <- function(y, yaxt=TRUE, xaxt=TRUE, col=1, ylow=log10(50), yhigh=log1
     if(mod==TRUE) points(newdata$ypred ~ newdata$log2.psr, typ='l', lwd=2, col=col.list[col])
     
     # add points for consumer sub web
-    points(y ~ log2.psr, data=sub, pch=21, col=add.alpha(col.list[col],0.1))
+    points(y ~ log2.psr, data=sub, pch=21, col=add.alpha(col.list[col],0.15))
     lmm <- NULL
     lmm <-lmer(y ~ log2.psr + (1|block/plot) + (1|time.period), data=sub)
     #plot(lmm)
@@ -108,15 +108,13 @@ plot.freq <- function(y, yaxt=TRUE, xaxt=TRUE, col=1, ylow=log10(50), yhigh=log1
     return(results)
 }
 
-# print figure and results
+# run analysis and print figure
 par(mfrow=c(3,2), oma=c(3,3,1,0), mar=c(1,1,2,1))
 results <- plot.freq(y="log.s1", TRUE, FALSE, 1)
 results <- plot.freq("log.s2", FALSE, FALSE, 2)
 results <- plot.freq("log.s4", TRUE, FALSE, 3)
 results <- plot.freq("log.s5", FALSE, TRUE, 4)
 results <- plot.freq("log.other", TRUE, TRUE, 5, ylow=0,yhigh=log10(500), mod=FALSE)
-
-write.csv(results, "anova_results_updated.csv")
 
 
 # 4. Analyse normalisedz-scores (Fig. 3)
@@ -137,7 +135,7 @@ plot.zscores <- function(y, yaxt=TRUE, xaxt=TRUE, col=1) {
   if(yaxt==FALSE) axis(2, at=seq(-0.8,0.8,0.4), lab=NA, las=1)
   
   # add points for full web
-  points(y ~ log2.psr, data=full, pch=16, col=add.alpha(col.list[col],0.1), cex=0.9)
+  points(y ~ log2.psr, data=full, pch=16, col=add.alpha(col.list[col],0.15), cex=0.9)
   lmm <- NULL
   lmm <-lmer(y ~ log2.psr + (1|block/plot) + (1|time.period), data=full)
   #plot(lmm)
@@ -147,7 +145,7 @@ plot.zscores <- function(y, yaxt=TRUE, xaxt=TRUE, col=1) {
   points(newdata$ypred ~ newdata$log2.psr, typ='l', lwd=2, col=col.list[col])
   
   # add points for consumer sub web
-  points(y ~ log2.psr, data=sub, pch=21, col=add.alpha(col.list[col],0.1), cex=0.9)
+  points(y ~ log2.psr, data=sub, pch=21, col=add.alpha(col.list[col],0.15), cex=0.9)
   lmm <- NULL
   lmm <-lmer(y ~ log2.psr + (1|block/plot) + (1|time.period), data=sub)
   #plot(lmm)
@@ -159,14 +157,12 @@ plot.zscores <- function(y, yaxt=TRUE, xaxt=TRUE, col=1) {
   return(results)
 }
 
-# print figure and results
+# run analysis and print figure
 par(mfrow=c(2,2), oma=c(2,2,1,0), mar=c(1,1,2,1))
 results <- plot.zscores("s1.z.mean", TRUE, FALSE, 1)
 results <- plot.zscores("s2.z.mean", FALSE, FALSE, 2)
 results <- plot.zscores("s4.z.mean", TRUE, TRUE, 3)
 results <- plot.zscores("s5.z.mean", FALSE, TRUE, 4)
-
-write.csv(results, "anova_results_updated.csv")
 
 
 
